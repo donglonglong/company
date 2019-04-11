@@ -14,14 +14,17 @@ use think\Model;
 class Cate extends Model
 {
 
+    /**
+     * 查找顶级栏目、并更新排序
+     */
     public function catetree()
     {
-        $cateres = $this->select();
+        $cateres = $this->order('sort ace')->select();
         return $this->sort($cateres);
     }
 
     /***
-     * 排序的方法
+     * 排序的方法  找出顶级栏目
      */
     public function sort($data, $pid = 0, $level = 0)
     {
@@ -36,24 +39,9 @@ class Cate extends Model
         return $arr;
     }
 
-    /***
-     * 修改栏目信息
+    /**
+     * 删除栏目
      */
-    public function saveadmin($data,$admins)
-    {
-        if(!$data['catename']){
-            return 2;//栏目名称为空
-        }
-        if($data['type']){
-            return 3; //栏目类型为空
-        }
-
-        $num =Db::name('cate')->where($admins)->update($data);
-        if($num>0){
-            return true;
-        }
-    }
-
     public function delcate($data)
     {
         if (!empty($data)) {

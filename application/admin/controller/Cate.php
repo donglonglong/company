@@ -15,7 +15,7 @@ use app\admin\model\Cate as CateModel;
 class Cate extends Common
 {
     /***
-     * @var array 前置操作
+     * @var array 前置操作  （用于先删除子分类）
      */
     protected $beforeActionList = [
 //        'first',
@@ -31,7 +31,17 @@ class Cate extends Common
     public function lst()
     {
         $cate = new CateModel;
-        $cateres = $cate->catetree();
+        if(request()->isPost()){
+//            dump(input('post.'));exit();
+           $sorts =input('post.');
+            foreach ($sorts as $k => $v) {
+                $cate->update(['id'=>$k,'sort'=>$v]);
+            }
+            $this->success('更新排序成功！',url('lst'));
+            return ;
+        }
+
+        $cateres = $cate->catetree();  //展示数据
         $this->assign('cateres', $cateres);
         return view();
     }
@@ -65,17 +75,28 @@ class Cate extends Common
      */
     public function edit($id)
     {
-        $cate = new CateModel();
-
+        $cate = new CateModel;
+        if(request()->isPost()){
+            $save =$cate->save(input('post.'),['id'=>input('id')]);
+            if($save !== false){
+                $this->success('修改栏目成功！',url('lst'));
+            }else{
+                $this->error('修改栏目失败');
+            }
+            return ;
+        }
         $cates = $cate->find(input('id'));
-        dump($cates);exit();
         $cateres = $cate->catetree();
-        $this->assign('cateres',array(
-            'cateres' =>$cateres,
-            'cates'=>$cates,
+        $this->assign(array(
+            'cateres'=>$cateres,
+            'cates' =>$cates,
         ));
         return view();
     }
+    /**
+     * 删除分类
+     * @param $id
+     */
     public function remove($id)
     {
         if (!empty($id)) {

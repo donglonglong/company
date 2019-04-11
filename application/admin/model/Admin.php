@@ -39,20 +39,20 @@ class Admin extends Model{
 
     }
 
+    /**
+     * 修改管理员
+     */
     public function saveadmin($data,$admins){
         if(!$data['name']){
             return 2;//管理员用户名为空
         }
-        if(!$data['password1'] && $data['password2']){
-            $data['password1']=$admins['password1'];
-            $data['password2']=$admins['password2'];
-        }else if(!$data['password1'] == $data['password2']){
-            echo '两次密码输入不一致';
+        if(!$data['password']){
+            $data['password']=$admins['password'];
         }else{
-            $data['password1']=md5($data['password1']);
-            $data['password2']=md5($data['password2']);
+            $data['password']=md5($data['password']);
         }
-        return $this::update(['name'=>$data['name'],'password'=>$data['password1']],['id'=>$data['id']]);
+        db('auth_group_access')->where(array('uid'=>$data['id']))->update(['group_id'=>$data['group_id']]);
+        return $this::update(['name'=>$data['name'],'password'=>$data['password']],['id'=>$data['id']]);
     }
 
     public function deladmin($id){

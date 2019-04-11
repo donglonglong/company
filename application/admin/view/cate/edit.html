@@ -59,13 +59,14 @@
             <div class="widget-body">
                 <div id="horizontal-form">
                     <form class="form-horizontal" role="form" action="" method="post">
+                        <input type="hidden" name="id" value="{}">
                         <div class="form-group">
                             <label for="username" class="col-sm-2 control-label no-padding-right">上级栏目</label>
                             <div class="col-sm-6">
                                 <select name="pid">
                                     <option value="0">顶级栏目</option>
                                     {volist name="cateres" id="cate"}
-                                    <option value="{$cate.id}">{if condition="$cate['level'] neq 0"}|{/if}<?php echo str_repeat('-', $cate['level']*4)?>{$cate.catename}</option>
+                                    <option {if condition="$cates['id'] eq $cate['id']"}selected="selected"{/if} value="{$cate.id}">{if condition="$cate['level'] neq 0"}|{/if}<?php echo str_repeat('-', $cate['level']*4)?>{$cate.catename}</option>
                                     {/volist}
                                 </select>
                             </div>
@@ -74,7 +75,7 @@
                         <div class="form-group">
                             <label for="username" class="col-sm-2 control-label no-padding-right">栏目名称</label>
                             <div class="col-sm-6">
-                                <input class="form-control"  placeholder="" name="catename" type="text">
+                                <input class="form-control"  placeholder="" value="{$cates.catename}" name="catename" type="text">
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
@@ -98,19 +99,19 @@
                             <div class="col-sm-6">
                                 <div class="radio" style="float:left; margin-right:10px;">
                                     <label>
-                                        <input checked="checked" name="type" value="1"  type="radio">
+                                        <input {if condition="$cates['type'] eq 1"}checked="checked"{/if} name="type" value="1"  type="radio">
                                         <span class="text">文章列表</span>
                                     </label>
                                 </div>
                                 <div class="radio" style="float:left; margin-right:10px;">
                                     <label>
-                                        <input name="type" class="inverted" value="2" type="radio">
+                                        <input <input {if condition="$cates['type'] eq 2"}checked="checked"{/if} name="type" class="inverted" value="2" type="radio">
                                         <span class="text">单页</span>
                                     </label>
                                 </div>
                                 <div class="radio" style="float:left; margin-right:10px;">
                                     <label>
-                                        <input name="type" class="inverted" value="3" type="radio">
+                                        <input <input {if condition="$cates['type'] eq 3"}checked="checked"{/if} name="type" class="inverted" value="3" type="radio">
                                         <span class="text">图片列表</span>
                                     </label>
                                 </div>
