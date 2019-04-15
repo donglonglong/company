@@ -6,7 +6,7 @@
  * Time: 13:22
  */
 namespace app\admin\controller;
-class Index{
+class Index extends Common {
     public function  index(){
         return view();
     }

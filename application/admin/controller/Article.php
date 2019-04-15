@@ -70,7 +70,7 @@ class Article extends Common
     public function  add(){
         if(request()->isPost()){
             $data = input('post.');
-//            dump($data);exit();
+//           dump($data);exit();
             $article = new ArticleModel();
            if($article->save($data)){
                $this->success('添加文章成功',url('lst'));
@@ -86,27 +86,35 @@ class Article extends Common
     }
 
     public function edit($id){
-
-        $article =Db::name('article')->find($id);
-        if(!$article){
-            $this->error('文章不存在');
+        if(request()->isPost()){
+            $data = input('post.');
+            $art = new ArticleModel();
+            $save = $art->isUpdate()->save($data);
+//            $save =Db::name('article')->update(input('post.'));
+            if($save){
+                $this->success('修改成功！',url('lst'));
+            }else{
+                $this->error('修改失败！');
+            }
+            return;
         }
-        $this->assign('article',$article);
-
-
 
         $cate = new CateModel();
-        $cates = $cate->find($id);
+        $article =Db::name('article')->find($id);
         $cateres = $cate->catetree();
         $this->assign(array(
             'cateres'=>$cateres,
-            'cates' =>$cates,
+            'article' =>$article,
         ));
         return view();
     }
 
-    public function del(){
-
+    public function del( ){
+             if(ArticleModel::destroy(input('id'))){
+                $this->success('删除成功',url('lst'));
+            }else{
+                $this->error('删除失败');
+            }
     }
 
 

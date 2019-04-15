@@ -11,6 +11,8 @@ namespace app\admin\controller;
 use think\Db;
 use think\Loader;
 use app\admin\model\Cate as CateModel;
+use app\admin\model\Article as ArticleModel;
+
 
 class Cate extends Common
 {
@@ -30,19 +32,18 @@ class Cate extends Common
      */
     public function lst()
     {
-        $cate = new CateModel;
+
+        $cate=new CateModel();
         if(request()->isPost()){
-//            dump(input('post.'));exit();
-           $sorts =input('post.');
+            $sorts=input('post.');
             foreach ($sorts as $k => $v) {
                 $cate->update(['id'=>$k,'sort'=>$v]);
             }
             $this->success('更新排序成功！',url('lst'));
-            return ;
+            return;
         }
-
-        $cateres = $cate->catetree();  //展示数据
-        $this->assign('cateres', $cateres);
+        $cateres=$cate->catetree();
+        $this->assign('cateres',$cateres);
         return view();
     }
     /**
@@ -77,7 +78,8 @@ class Cate extends Common
     {
         $cate = new CateModel;
         if(request()->isPost()){
-            $save =$cate->save(input('post.'),['id'=>input('id')]);
+            $data =input('post.');
+            $save =$cate->save($data,['id'=>$data['id']]);
             if($save !== false){
                 $this->success('修改栏目成功！',url('lst'));
             }else{
@@ -117,9 +119,17 @@ class Cate extends Common
     public function delsoncate(){
         $cateid = input('id');
         $catemode = new CateModel();
-        $sonids = $catemode->getchilrenid($cateid);
+        $sonids = $catemode->getchilrenid($cateid);   //所有子栏目
+        $allcateid=$sonids;
+        $allcateid[]=$cateid;
 
+        foreach ($allcateid as $k=>$v) {
+            $article=new ArticleModel;
+            $article->where(array('cateid'=>$v))->delete();  //根据栏目删除文章
+        }
+        if($sonids){
         Db::name('cate')->delete($sonids,$cateid);
+        }
     }
     /**
      * 退出登录
