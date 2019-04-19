@@ -17,7 +17,7 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-    
+
 </head>
 <body>
 	<!-- 头部 -->
@@ -26,7 +26,7 @@
 </div>
 
 	<!-- /头部 -->
-	
+
 	<div class="main-container container-fluid">
 		<div class="page-container">
 			            <!-- Page Sidebar -->
@@ -49,37 +49,65 @@
 
                 <!-- Page Body -->
                 <div class="page-body">
-                    
+
 <div class="row">
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
             <div class="widget-header bordered-bottom bordered-blue">
-                <span class="widget-caption">新增管理员</span>
+                <span class="widget-caption">配置修改</span>
             </div>
             <div class="widget-body">
                 <div id="horizontal-form">
-                    <form class="form-horizontal" role="form" action="{:url('admin/add')}" method="post">
+                     <form class="form-horizontal" role="form" action="" method="post">
+                         <input type="text" hidden="hidden" name="id" value="{$Confs.id}">
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">用户名</label>
+                            <label for="username" class="col-sm-2 control-label no-padding-right">中文名称</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="name" placeholder="" name="name" required="" type="text">
+                                <input class="form-control"  placeholder="" required="" value="{$Confs.cnname}"   name="cnname" type="text">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">英文名称</label>
+                            <div class="col-sm-6">
+                                <input class="form-control"  placeholder="" required="" value="{$Confs.enname}"   name="enname" type="text">
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
 
                         <div class="form-group">
-                            <label for="group_id" class="col-sm-2 control-label no-padding-right">密  码</label>
+                            <label for="username" class="col-sm-2 control-label no-padding-right">配置类型</label>
                             <div class="col-sm-6">
-                                <input class="form-control"  name="password" required="" type="text">
+                                <select disabled="disabled" typeof="{$Confs.type}">
 
+                                    <option {if condition="$Confs['type'] eq 1" } selected="selected"{/if} value ="1">单行文本</option>
+                                    <option {if condition="$Confs['type'] eq 2"} selected="selected" {/if} value ="2">多行文本</option>
+                                    <option {if condition="$Confs['type'] eq 3"} selected="selected" {/if} value ="3">单选按钮</option>
+                                    <option {if condition="$Confs['type'] eq 4"} selected="selected" {/if} value ="4">复选框</option>
+                                    <option {if condition="$Confs['type'] eq 5"} selected="selected" {/if} value ="5">下拉菜单</option>
+                                </select>
                             </div>
-                        </div>  
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+
+                         <div class="form-group">
+                             <label for="username" class="col-sm-2 control-label no-padding-right">可选值</label>
+                             <div class="col-sm-6">
+                                 <input class="form-control"  placeholder="" required="" name="value"    value="{$Confs.values}" type="text">
+                             </div>
+                             <p class="help-block col-sm-4 red">* 必填</p>
+                         </div>
+
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-default">保存信息</button>
                             </div>
                         </div>
+
                     </form>
+
                 </div>
             </div>
         </div>
@@ -90,7 +118,7 @@
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
-		</div>	
+		</div>
 	</div>
 
 	    <!--Basic Scripts-->
@@ -99,7 +127,7 @@
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
-    
+
 
 
 </body></html>

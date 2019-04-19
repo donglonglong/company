@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>童老师ThinkPHP交流群：484519446</title>
+    <title>乐胶网ThinkPHP交流群：484519446</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,6 +72,7 @@
                                             </thead>
                                             <tbody>
                                             {volist name="articles" id="art"}
+
                                             <tr>
                                                 <td align="center">{$art.id}</td>
                                                 <td align="center"><?php echo mb_substr($art['title'], 0,10,'utf-8');if(strlen($art['title'])>16){echo '...';}?></td>
@@ -100,7 +101,7 @@
                                             {/volist}
                                             </tbody>
                                         </table>
-                                        {$articles->render()}
+
 
                                     </form>
                                 </div>

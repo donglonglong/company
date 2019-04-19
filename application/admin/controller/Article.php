@@ -68,11 +68,22 @@ class Article extends Common
      * @return \think\response\View|void
      */
     public function  add(){
+
         if(request()->isPost()){
             $data = input('post.');
+            $validate = \think\Loader::validate('Article');
+            if(!$validate->scene('add')->check($data)){
+                $this->error($validate->getError());
+            }
 //           dump($data);exit();
+//            $add = Db::name('article')->insert($data);
+//            if ($add) {
+//                $this->success('添加成功！', url('lst'));
+//            } else {
+//                $this->error('添加栏目失败！');
+//            }
             $article = new ArticleModel();
-           if($article->save($data)){
+            if($article->save($data)){
                $this->success('添加文章成功',url('lst'));
            }else{
                $this->error('添加文章失败');

@@ -65,9 +65,12 @@ class Link extends Common
     {
         $link = new LinkModel;
         if(request()->isPost()){
-            $save =$link->save(input('post.'),['id'=>input('id')]);
-            dump($save);exit();
-
+            $data = input('post.');
+            $validate = \think\Loader::validate('Link');
+            if(!$validate->scene('add')->check($data)){
+                $this->error($validate->getError());
+            }
+            $save =$link->save($data,['id'=>$data['id']]);
             if($save !== false){
                 $this->success('修改成功！',url('lst'));
             }else{

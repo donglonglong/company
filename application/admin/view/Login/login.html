@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"><!--Head--><head>
     <meta charset="utf-8">
-    <title>童老师ThinkPHP交流群：484519446</title>
+    <title>乐胶网ThinkPHP交流群：484519446</title>
     <meta name="description" content="login page">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,12 +28,16 @@
                 <div class="loginbox-textbox">
                     <input class="form-control" placeholder="password" name="password" type="password">
                 </div>
+                <div class="loginbox-textbox">
+                    <input class="form-control"  style="width: 80px;float: left" placeholder="验证码" name="code" type="text">
+                    <img src="{:captcha_src()}" alt="captcha" onclick="this.src='{:captcha_src()}?'+Math.random();" style="width: 100px;float: left;margin-left: 10px" />
+                </div>
                 <div class="loginbox-submit">
-                    <input class="btn btn-primary btn-block" value="Login" type="submit">
+                     <input class="btn btn-primary btn-block" style="margin-top: 20px" value="Login" type="submit">
                 </div>
             </div>
                 <div class="logobox">
-                    <p class="text-center">童老师ThinkPHP交流群：4845194464</p>
+                    <p class="text-center">乐胶网ThinkPHP交流群：4845194464</p>
                 </div>
         </form>
     </div>

@@ -16,7 +16,19 @@ class Link extends Validate
         'title'  => 'require|max:25',
         'desc'   => 'require|max:25',
         'url' => 'email',
-        'sort' => 'number|between:1,120',
+        'sort' => 'require|integer', '排序不可为空!|排序数据不正确!',
+    ];
+
+    protected $msg = [
+        'title.require' => '标题必填',
+        'title.unique' => '标题不能重复',
+        'desc.max'     => '名称最多不能超过25个字符',
+        'url.number'   => '年龄必须是数字',
+    ];
+
+    protected   $scene = [
+        'add'   =>  ['name'],
+        'edit'  =>  ['name'],
     ];
 
 }
